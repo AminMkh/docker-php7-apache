@@ -18,6 +18,12 @@ server {
     location / {
         try_files $uri $uri/ =404;
     }
+    location /dashboard {
+        try_files $uri $uri/ /dashboard/public/index.php?$query_string;
+    }
+    location /dashboard-dev {
+        try_files $uri $uri/ /dashboard-dev/public/index.php?$query_string;
+    }
 
     location ~ \.php$ {
         include snippets/fastcgi-php.conf;
