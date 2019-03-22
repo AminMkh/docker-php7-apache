@@ -43,4 +43,6 @@ RUN curl -sS https://getcomposer.org/installer | php --  --install-dir=/usr/bin 
 
 WORKDIR /var/www/html/
 
+RUN apt install -y nodejs npm
+
 CMD ["php-fpm7.2", "-F"]
