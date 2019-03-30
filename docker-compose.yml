@@ -17,6 +17,7 @@ services:
     build: build/php7.2
     ports:
     - 8080:8080
+    - 8000:8000
     volumes:
       - ../:/var/www/html/
       - ./conf/php7.2:/etc/php/7.2/cli/
