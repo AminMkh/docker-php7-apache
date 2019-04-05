@@ -8,7 +8,7 @@ server {
     server_name localhost;
     #return 301 https://$server_name$request_uri;
 
-    set $WWW_ROOT /var/www/html/;
+    set $WWW_ROOT /var/www/html/dashboard/public;
     root $WWW_ROOT;
 
     index index.php index.html index.htm index.nginx-debian.html;
@@ -16,13 +16,10 @@ server {
     server_name localhost;
 
     location / {
-        try_files $uri $uri/ =404;
+        try_files $uri $uri/ /index.php?$query_string;
     }
-    location /dashboard {
-        try_files $uri $uri/ /dashboard/public/index.php?$query_string;
-    }
-    location /dashboard-dev {
-        try_files $uri $uri/ /dashboard-dev/public/index.php?$query_string;
+    location /full {
+        try_files $uri $uri/ /full/public/index.php?$query_string;
     }
 
     location ~ \.php$ {
@@ -37,6 +34,5 @@ server {
     location ~ /.well-known {
         allow all;
     }
-
 }
 
