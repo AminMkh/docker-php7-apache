@@ -33,6 +33,7 @@ services:
       - ./shared:/shared
     environment:
       MYSQL_DATABASE: main
+      # alter user 'main_user'@'%' IDENTIFIED WITH mysql_native_password BY 'main_password';
       MYSQL_USER: main_user
       MYSQL_PASSWORD: main_password
       MYSQL_ROOT_PASSWORD: root_password
