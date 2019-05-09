@@ -1,3 +1,5 @@
+client_max_body_size 20M;
+
 upstream fastcgi_backend {
     server php:9000;
 }
@@ -18,6 +20,10 @@ server {
     location / {
         try_files $uri $uri/ /index.php?$query_string;
     }
+    #    location /dashboard {
+    #        try_files $uri $uri/ /dashboard/public/index.php?$query_string;
+    #    }
+
     location /full {
         try_files $uri $uri/ /full/public/index.php?$query_string;
     }

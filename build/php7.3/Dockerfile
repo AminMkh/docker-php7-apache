@@ -2,6 +2,7 @@ FROM ubuntu:latest
 
 MAINTAINER Amin M
 
+ENV DEBIAN_FRONTEND noninteractive
 # clean up
 RUN apt clean && apt update && apt upgrade -y
 
@@ -9,7 +10,7 @@ RUN apt clean && apt update && apt upgrade -y
 RUN apt-get update \
     && apt-get install -y unzip libaio-dev libmcrypt-dev git libzip-dev\
 		libmcrypt-dev \
-		libpng12-dev \
+		libpng-dev \
     && apt-get clean -y
 
 # php required settings
@@ -23,21 +24,28 @@ ENV LC_ALL en_US.UTF-8
 RUN apt install  -y \
 	curl zip unzip git software-properties-common
 
-# install PHP
+# PHP repos
 RUN add-apt-repository ppa:ondrej/php -y
 RUN apt update
-RUN apt install -y php7.1 php7.1-cli php7.1-common \
-    php7.1-mbstring php7.1-xml php7.1-mysqlnd php7.1-pdo-sqlite \
-    php7.1-gd php7.1-curl php7.1-zip php7.1-soap php7.1-intl \
-    php7.1-fpm php7.1-apcu
 
-# php fpm
-RUN echo "listen = 0.0.0.0:9000" >> /etc/php/7.1/fpm/pool.d/www.conf
-RUN service php7.1-fpm start
+# PHP install
+RUN apt install -y php7.3 php7.3-cli php7.3-common \
+    php7.3-mbstring php7.3-xml php7.3-mysqlnd php7.3-pdo-sqlite \
+    php7.3-gd php7.3-curl php7.3-zip php7.3-soap php7.3-intl \
+    php7.3-fpm php7.3-apcu
+
+# PHP fpm
+RUN echo "listen = 0.0.0.0:9000" >> /etc/php/7.3/fpm/pool.d/www.conf
+RUN service php7.3-fpm start
 
 # PHP composer
 RUN curl -sS https://getcomposer.org/installer | php --  --install-dir=/usr/bin --filename=composer
 
 WORKDIR /var/www/html/
 
-CMD ["php-fpm7.1", "-F"]
+RUN apt install -y nodejs npm
+
+ADD bash_aliases.sh /opt/entrypoint.sh
+#ENTRYPOINT ["/opt/entrypoint.sh"]
+
+CMD ["php-fpm7.3", "-F"]

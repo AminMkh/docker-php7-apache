@@ -45,4 +45,7 @@ WORKDIR /var/www/html/
 
 RUN apt install -y nodejs npm
 
+ADD bash_aliases.sh /opt/entrypoint.sh
+#ENTRYPOINT ["/opt/entrypoint.sh"]
+
 CMD ["php-fpm7.2", "-F"]

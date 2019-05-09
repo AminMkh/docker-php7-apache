@@ -14,7 +14,7 @@ services:
       - ./conf/nginx:/etc/nginx/sites-available
       - ./shared:/shared
   php:
-    build: build/php7.2
+    build: build/php7.3
     ports:
     - 8080:8080
     - 8000:8000
