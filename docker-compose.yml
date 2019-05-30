@@ -20,8 +20,8 @@ services:
     - 8000:8000
     volumes:
       - ../:/var/www/html/
-      - ./conf/php7.2:/etc/php/7.2/cli/
-      - ./conf/php7.2:/etc/php/7.2/fpm/
+      - ./conf/php7.3/cli:/etc/php/7.3/cli/
+      - ./conf/php7.3/fpm:/etc/php/7.3/fpm/
       - ./shared:/shared
   db:
     image: mysql
