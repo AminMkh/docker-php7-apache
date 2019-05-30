@@ -1,9 +1,5 @@
 client_max_body_size 20M;
 
-upstream fastcgi_backend {
-    server php:9000;
-}
-
 server {
     listen 80;
     listen [::]:80;
@@ -30,7 +26,7 @@ server {
 
     location ~ \.php$ {
         include snippets/fastcgi-php.conf;
-        fastcgi_pass php:9000;
+        fastcgi_pass app:9000;
     }
 
     location ~ /\.ht {
