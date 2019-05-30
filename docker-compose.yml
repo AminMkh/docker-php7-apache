@@ -30,7 +30,7 @@ services:
     - ./conf/php7.3/cli:/etc/php/7.3/cli/
     - ./conf/php7.3/fpm:/etc/php/7.3/fpm/
     - ./shared:/shared
-    command: php dashboard/artisan queue:work
+    command: bash -c "cd dashboard && php artisan queue:work"
   scheduler:
     build: build/php7.3
     volumes:
@@ -38,7 +38,15 @@ services:
     - ./conf/php7.3/cli:/etc/php/7.3/cli/
     - ./conf/php7.3/fpm:/etc/php/7.3/fpm/
     - ./shared:/shared
-    command: php dashboard/artisan schedule:run
+    command: bash -c "cd dashboard && while true; do php artisan schedule:run; sleep 60; done"
+  npm:
+    build: build/php7.3
+    volumes:
+    - ../:/var/www/html/
+    - ./conf/php7.3/cli:/etc/php/7.3/cli/
+    - ./conf/php7.3/fpm:/etc/php/7.3/fpm/
+    - ./shared:/shared
+    command: bash -c "cd dashboard && npm run watch=appsflyer"
   db:
     image: mysql
     ports:
