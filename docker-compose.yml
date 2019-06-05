@@ -30,7 +30,7 @@ services:
     - ./conf/php7.3/cli:/etc/php/7.3/cli/
     - ./conf/php7.3/fpm:/etc/php/7.3/fpm/
     - ./shared:/shared
-    command: bash -c "cd dashboard && php artisan queue:work"
+    command: bash -c "cd dashboard && php artisan queue:work --queue=listeners -vvv"
   scheduler:
     build: build/php7.3
     volumes:
