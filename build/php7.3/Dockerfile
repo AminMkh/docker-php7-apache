@@ -43,7 +43,11 @@ RUN curl -sS https://getcomposer.org/installer | php --  --install-dir=/usr/bin 
 
 WORKDIR /var/www/html/
 
-RUN apt install -y nodejs npm
+# Node js
+RUN curl -sL https://deb.nodesource.com/setup_12.x -o setup_12.x
+RUN bash setup_12.x
+RUN apt-get install -y nodejs
+RUN apt-get install build-essential -y
 
 ADD bash_aliases.sh /usr/sbin/entrypoint.sh
 RUN cat /usr/sbin/entrypoint.sh >> ~/.bashrc

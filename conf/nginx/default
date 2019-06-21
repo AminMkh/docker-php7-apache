@@ -6,22 +6,19 @@ server {
     server_name localhost;
     #return 301 https://$server_name$request_uri;
 
-    set $WWW_ROOT /var/www/html/dashboard/public;
+    set $WWW_ROOT /var/www/html/public;
     root $WWW_ROOT;
 
+
     index index.php index.html index.htm index.nginx-debian.html;
+
+    charset utf-8;
+    error_page 404 /index.php;
 
     server_name localhost;
 
     location / {
         try_files $uri $uri/ /index.php?$query_string;
-    }
-    #    location /dashboard {
-    #        try_files $uri $uri/ /dashboard/public/index.php?$query_string;
-    #    }
-
-    location /full {
-        try_files $uri $uri/ /full/public/index.php?$query_string;
     }
 
     location ~ \.php$ {

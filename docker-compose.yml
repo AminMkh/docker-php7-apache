@@ -3,6 +3,7 @@ version: '3'
 services:
   web:
     build: build/nginx
+    restart: always
     ports:
       - 80:80
       - 443:443
@@ -15,6 +16,7 @@ services:
       - ./shared:/shared
   app:
     build: build/php7.3
+    restart: always
     ports:
     - 8080:8080
     - 8000:8000
@@ -23,30 +25,32 @@ services:
       - ./conf/php7.3/cli:/etc/php/7.3/cli/
       - ./conf/php7.3/fpm:/etc/php/7.3/fpm/
       - ./shared:/shared
-  worker:
-    build: build/php7.3
-    volumes:
-    - ../:/var/www/html/
-    - ./conf/php7.3/cli:/etc/php/7.3/cli/
-    - ./conf/php7.3/fpm:/etc/php/7.3/fpm/
-    - ./shared:/shared
-    command: bash -c "cd dashboard && php artisan queue:work --queue=listeners -vvv"
+#  worker:
+#    build: build/php7.3
+#    volumes:
+#    - ../:/var/www/html/
+#    - ./conf/php7.3/cli:/etc/php/7.3/cli/
+#    - ./conf/php7.3/fpm:/etc/php/7.3/fpm/
+#    - ./shared:/shared
+#    command: bash -c "cd dashboard && php artisan queue:work --queue=listeners -vvv"
   scheduler:
     build: build/php7.3
+    restart: always
     volumes:
     - ../:/var/www/html/
     - ./conf/php7.3/cli:/etc/php/7.3/cli/
     - ./conf/php7.3/fpm:/etc/php/7.3/fpm/
     - ./shared:/shared
-    command: bash -c "cd dashboard && while true; do php artisan schedule:run -vvv; sleep 60; done"
+    command: bash -c "while true; do php artisan schedule:run -vvv; sleep 60; done"
   npm:
     build: build/php7.3
+    restart: always
     volumes:
     - ../:/var/www/html/
     - ./conf/php7.3/cli:/etc/php/7.3/cli/
     - ./conf/php7.3/fpm:/etc/php/7.3/fpm/
     - ./shared:/shared
-    command: bash -c "cd dashboard && npm run watch=appsflyer"
+    command: bash -c "npm run watch=appsflyer"
   db:
     image: mysql
     ports:
@@ -61,15 +65,15 @@ services:
       MYSQL_USER: main_user
       MYSQL_PASSWORD: main_password
       MYSQL_ROOT_PASSWORD: root_password
-  cache:
-    image: redis
-    ports:
-      - 6379:6379
-    volumes:
-      - ./cache:/data
-      - ./shared:/shared
-    environment:
-      - ALLOW_EMPTY_PASSWORD=yes
+#  cache:
+#    image: redis
+#    ports:
+#      - 6379:6379
+#    volumes:
+#      - ./cache:/data
+#      - ./shared:/shared
+#    environment:
+#      - ALLOW_EMPTY_PASSWORD=yes
 #  memcached:
 #    image: memcached
 #    ports:
