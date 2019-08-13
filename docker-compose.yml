@@ -50,7 +50,7 @@ services:
     - ./conf/php7.3/cli:/etc/php/7.3/cli/
     - ./conf/php7.3/fpm:/etc/php/7.3/fpm/
     - ./shared:/shared
-    command: bash -c "npm run watch=appsflyer"
+    command: bash -c "while true; do npm run watch; sleep 60; done"
   db:
     image: mysql
     ports:
@@ -89,3 +89,8 @@ services:
 #    ports:
 #      - 9200:9200
 #      - 9300:9300
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+    - 81:8080

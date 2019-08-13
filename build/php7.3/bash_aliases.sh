@@ -18,6 +18,7 @@ phpunit() {
     phpunit "$@"
   fi
 }
+alias tests=phpunit
 #alias phpunit="phpunit --filter "
 
 alias pa='php artisan'
