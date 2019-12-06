@@ -12,7 +12,7 @@ services:
 #      - ./conf/apache:/etc/apache2/sites-enabled/
       - ./conf/nginx:/etc/nginx/sites-available
       - ./shared:/shared
-  app:
+  be:
     build: build/php7.3
     restart: always
     ports:
@@ -22,6 +22,15 @@ services:
       - ./conf/php7.3/cli:/etc/php/7.3/cli/
       - ./conf/php7.3/fpm:/etc/php/7.3/fpm/
       - ./shared:/shared
+  fe:
+    build: build/php7.3
+    restart: always
+    volumes:
+    - ../:/var/www/html/
+    - ./conf/php7.3/cli:/etc/php/7.3/cli/
+    - ./conf/php7.3/fpm:/etc/php/7.3/fpm/
+    - ./shared:/shared
+    command: bash -c "while true; do npm run watch; sleep 60; done"
 #  worker:
 #    build: build/php7.3
 #    volumes:
@@ -39,15 +48,6 @@ services:
     - ./conf/php7.3/fpm:/etc/php/7.3/fpm/
     - ./shared:/shared
     command: bash -c "while true; do php artisan schedule:run -vvv; sleep 60; done"
-  npm:
-    build: build/php7.3
-    restart: always
-    volumes:
-    - ../:/var/www/html/
-    - ./conf/php7.3/cli:/etc/php/7.3/cli/
-    - ./conf/php7.3/fpm:/etc/php/7.3/fpm/
-    - ./shared:/shared
-    command: bash -c "while true; do npm run watch; sleep 60; done"
   db:
     image: mysql
     ports:
