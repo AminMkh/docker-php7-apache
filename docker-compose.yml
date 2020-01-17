@@ -13,55 +13,51 @@ services:
       - ./conf/nginx:/etc/nginx/sites-available
       - ./shared:/shared
   be:
-    build: build/php7.3
+    build: build/php7.4
     restart: always
     ports:
     - 8000:8000
     volumes:
       - ../:/var/www/html/
-      - ./conf/php7.3/cli:/etc/php/7.3/cli/
-      - ./conf/php7.3/fpm:/etc/php/7.3/fpm/
+      - ./conf/php7.4/cli:/etc/php/7.3/cli/
+      - ./conf/php7.4/fpm:/etc/php/7.3/fpm/
       - ./shared:/shared
   fe:
-    build: build/php7.3
+    build: build/php7.4
     restart: always
     volumes:
     - ../:/var/www/html/
-    - ./conf/php7.3/cli:/etc/php/7.3/cli/
-    - ./conf/php7.3/fpm:/etc/php/7.3/fpm/
+    - ./conf/php7.4/cli:/etc/php/7.3/cli/
+    - ./conf/php7.4/fpm:/etc/php/7.3/fpm/
     - ./shared:/shared
     command: bash -c "while true; do npm run watch; sleep 60; done"
 #  worker:
-#    build: build/php7.3
+#    build: build/php7.4
 #    volumes:
 #    - ../:/var/www/html/
-#    - ./conf/php7.3/cli:/etc/php/7.3/cli/
-#    - ./conf/php7.3/fpm:/etc/php/7.3/fpm/
+#    - ./conf/php7.4/cli:/etc/php/7.3/cli/
+#    - ./conf/php7.4/fpm:/etc/php/7.3/fpm/
 #    - ./shared:/shared
 #    command: bash -c "cd dashboard && php artisan queue:work --queue=listeners -vvv"
-  scheduler:
-    build: build/php7.3
-    restart: always
-    volumes:
-    - ../:/var/www/html/
-    - ./conf/php7.3/cli:/etc/php/7.3/cli/
-    - ./conf/php7.3/fpm:/etc/php/7.3/fpm/
-    - ./shared:/shared
-    command: bash -c "while true; do php artisan schedule:run -vvv; sleep 60; done"
+#  scheduler:
+#    build: build/php7.4
+#    restart: always
+#    volumes:
+#    - ../:/var/www/html/
+#    - ./conf/php7.4/cli:/etc/php/7.3/cli/
+#    - ./conf/php7.4/fpm:/etc/php/7.3/fpm/
+#    - ./shared:/shared
+#    command: bash -c "while true; do php artisan schedule:run -vvv; sleep 60; done"
   db:
-    image: mysql
-    ports:
-      - 3306:3306
-    volumes:
-      - ./db/:/var/lib/mysql/
-#      - ./conf/mysql:/etc/mysql/
-      - ./shared:/shared
+    image: postgres
+    restart: always
     environment:
-      MYSQL_DATABASE: main
-      # alter user 'main_user'@'%' IDENTIFIED WITH mysql_native_password BY 'main_password';
-      MYSQL_USER: main_user
-      MYSQL_PASSWORD: main_password
-      MYSQL_ROOT_PASSWORD: root_password
+      POSTGRES_DB: main
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+    volumes:
+      - ./db:/var/lib/postgresql/data
+      - ./shared:/shared
 #  cache:
 #    image: redis
 #    ports:
