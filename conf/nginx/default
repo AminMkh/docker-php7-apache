@@ -1,14 +1,21 @@
 client_max_body_size 20M;
 
 server {
-    listen 80;
-    listen [::]:80;
+    listen 80 default_server;
+    server_name _;
+    return 301 https://$host$request_uri;
+}
+
+server {
     server_name localhost;
-    #return 301 https://$server_name$request_uri;
+    ssl on;
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    ssl_certificate    /etc/nginx/certs/nginx-selfsigned.crt;
+    ssl_certificate_key    /etc/nginx/certs/nginx-selfsigned.key;
 
     set $WWW_ROOT /var/www/html/public;
     root $WWW_ROOT;
-
 
     index index.php index.html index.htm index.nginx-debian.html;
 

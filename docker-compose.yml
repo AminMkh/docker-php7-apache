@@ -11,9 +11,10 @@ services:
       - ../:/var/www/html/
 #      - ./conf/apache:/etc/apache2/sites-enabled/
       - ./conf/nginx:/etc/nginx/sites-available
+      - ./conf/nginx/certs:/etc/nginx/certs
       - ./shared:/shared
   be:
-    build: build/php7.4
+    build: build/php7.3
     restart: always
     ports:
     - 8000:8000
@@ -30,7 +31,7 @@ services:
     - ./conf/php7.4/cli:/etc/php/7.3/cli/
     - ./conf/php7.4/fpm:/etc/php/7.3/fpm/
     - ./shared:/shared
-    command: bash -c "while true; do npm run watch; sleep 60; done"
+    command: bash -c "npm install; while true; do npm run watch; sleep 60; done"
 #  worker:
 #    build: build/php7.4
 #    volumes:
@@ -55,10 +56,9 @@ services:
       - 5432:5432
     environment:
       POSTGRES_DB: main
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: password
+      POSTGRES_USER: main_user
+      POSTGRES_PASSWORD: main_password
     volumes:
-      - ./db:/var/lib/postgresql/data
       - ./shared:/shared
 #  cache:
 #    image: redis
