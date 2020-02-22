@@ -14,7 +14,7 @@ services:
       - ./conf/nginx/certs:/etc/nginx/certs
       - ./shared:/shared
   be:
-    build: build/php7.3
+    build: build/php7.4
     restart: always
     ports:
     - 8000:8000

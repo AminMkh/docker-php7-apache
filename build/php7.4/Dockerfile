@@ -44,8 +44,8 @@ RUN curl -sS https://getcomposer.org/installer | php --  --install-dir=/usr/bin 
 WORKDIR /var/www/html/
 
 # Node js
-RUN curl -sL https://deb.nodesource.com/setup_10.x -o setup_10.x
-RUN bash setup_10.x
+RUN curl -sL https://deb.nodesource.com/setup_10.x -o setup_12.x
+RUN bash setup_12.x
 RUN apt-get install -y nodejs
 RUN apt-get install build-essential -y
 
