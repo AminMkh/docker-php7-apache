@@ -34,6 +34,9 @@ RUN apt install -y php7.3 php7.3-cli php7.3-common \
     php7.3-gd php7.3-curl php7.3-zip php7.3-soap php7.3-intl \
     php7.3-fpm php7.3-apcu
 
+RUN apt-get install php7.3-gmp
+
+
 # PHP fpm
 RUN echo "listen = 0.0.0.0:9000" >> /etc/php/7.3/fpm/pool.d/www.conf
 RUN service php7.3-fpm start

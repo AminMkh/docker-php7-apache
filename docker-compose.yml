@@ -23,15 +23,15 @@ services:
       - ./conf/php7.3/cli:/etc/php/7.3/cli/
       - ./conf/php7.3/fpm:/etc/php/7.3/fpm/
       - ./shared:/shared
-  fe:
-    build: build/php7.3
-    restart: always
-    volumes:
-    - ../:/var/www/html/
-    - ./conf/php7.3/cli:/etc/php/7.3/cli/
-    - ./conf/php7.3/fpm:/etc/php/7.3/fpm/
-    - ./shared:/shared
-    command: bash -c "while true; do npm run watch; sleep 60; done"
+#  fe:
+#    build: build/php7.3
+#    restart: always
+#    volumes:
+#    - ../:/var/www/html/
+#    - ./conf/php7.3/cli:/etc/php/7.3/cli/
+#    - ./conf/php7.3/fpm:/etc/php/7.3/fpm/
+#    - ./shared:/shared
+#    command: bash -c "while true; do npm run watch; sleep 60; done"
 #  worker:
 #    build: build/php7.3
 #    volumes:
@@ -40,15 +40,15 @@ services:
 #    - ./conf/php7.3/fpm:/etc/php/7.3/fpm/
 #    - ./shared:/shared
 #    command: bash -c "cd dashboard && php artisan queue:work --queue=listeners -vvv"
-  scheduler:
-    build: build/php7.3
-    restart: always
-    volumes:
-    - ../:/var/www/html/
-    - ./conf/php7.3/cli:/etc/php/7.3/cli/
-    - ./conf/php7.3/fpm:/etc/php/7.3/fpm/
-    - ./shared:/shared
-    command: bash -c "while true; do php artisan schedule:run -vvv; sleep 60; done"
+#  scheduler:
+#    build: build/php7.3
+#    restart: always
+#    volumes:
+#    - ../:/var/www/html/
+#    - ./conf/php7.3/cli:/etc/php/7.3/cli/
+#    - ./conf/php7.3/fpm:/etc/php/7.3/fpm/
+#    - ./shared:/shared
+#    command: bash -c "while true; do php artisan schedule:run -vvv; sleep 60; done"
   db:
     image: mysql
     ports:
@@ -87,8 +87,8 @@ services:
 #    ports:
 #      - 9200:9200
 #      - 9300:9300
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-    - 81:8080
+#  adminer:
+#    image: adminer
+#    restart: always
+#    ports:
+#    - 81:8080
