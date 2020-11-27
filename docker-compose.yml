@@ -56,3 +56,9 @@ services:
 #    ports:
 #      - 9200:9200
 #      - 9300:9300
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 81:8080
+
